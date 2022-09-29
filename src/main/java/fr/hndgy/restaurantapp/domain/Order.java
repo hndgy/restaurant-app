@@ -2,7 +2,7 @@ package fr.hndgy.restaurantapp.domain;
 
 import java.util.List;
 
-import fr.hndgy.restaurantapp.domain.Table.TableId;
+import fr.hndgy.restaurantapp.domain.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +12,10 @@ import lombok.Value;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Order {
     private OrderId orderId;
-    private final TableId table;
+    private final Table table;
     private final List<MenuElement> choices;
 
-    public static Order withoutId(TableId table, List<MenuElement> choices) {
+    public static Order withoutId(Table table, List<MenuElement> choices) {
         return new Order(table, choices);
     }
 
@@ -60,6 +60,4 @@ public class Order {
         private final Long value;
     }
 
-
-  
 }
