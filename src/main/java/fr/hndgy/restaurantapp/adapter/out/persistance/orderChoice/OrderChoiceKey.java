@@ -1,4 +1,4 @@
-package fr.hndgy.restaurantapp.adapter.out.persistance.order;
+package fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice;
 
 import java.io.Serializable;
 

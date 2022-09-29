@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntity;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

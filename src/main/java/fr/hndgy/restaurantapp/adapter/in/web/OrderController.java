@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.hndgy.restaurantapp.application.port.in.TakeOrderCommand;
-import fr.hndgy.restaurantapp.application.port.in.TakeOrderUseCase;
 import fr.hndgy.restaurantapp.domain.Order;
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +14,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final TakeOrderUseCase takeOrderUseCase;
-
-    @PostMapping("")
-    public Order create(TakeOrderDto takeOrderDto){
-        return takeOrderUseCase.takeOrder(takeOrderCommand);
-    }
+   
 }

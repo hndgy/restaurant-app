@@ -1,4 +1,4 @@
-package fr.hndgy.restaurantapp.adapter.out.persistance.order;
+package fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
 import fr.hndgy.restaurantapp.adapter.out.persistance.menuElement.MenuElementEntity;
+import fr.hndgy.restaurantapp.adapter.out.persistance.order.OrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
