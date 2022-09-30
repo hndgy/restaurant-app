@@ -2,22 +2,31 @@ package fr.hndgy.restaurantapp.adapter.out.persistance.menuElement;
 
 import org.springframework.stereotype.Component;
 
-import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntity;
+import fr.hndgy.restaurantapp.adapter.out.persistance.common.EntityMapper;
 import fr.hndgy.restaurantapp.domain.MenuElement;
 
 @Component
-public class MenuElementEntityMapper {
+public class MenuElementEntityMapper implements EntityMapper<MenuElementEntity, MenuElement>{
 
+    @Override
     public MenuElementEntity toEntity(MenuElement menuElement){
         MenuElementEntity entity = new MenuElementEntity();
-
-        entity.setId(menuElement.getMenuElementId().getValue());
+        if(menuElement.getMenuElementId() != null){
+            entity.setId(menuElement.getMenuElementId().getValue());
+        }
+        entity.setName(menuElement.getName());
+        entity.setPrice(menuElement.getPrice());
+        entity.setType(menuElement.getType());
         return entity;
     }
 
+    @Override
     public MenuElement toDomainObject(MenuElementEntity entity) {
+
+        MenuElement.MenuElementId id =  new MenuElement.MenuElementId(entity.getId());
         MenuElement menuElement = new MenuElement(
-            new MenuElement.MenuElementId(entity.getId()),
+            id,
+            entity.getName(),
             entity.getPrice(),
             entity.getType()
             );

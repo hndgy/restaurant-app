@@ -1,5 +1,6 @@
 package fr.hndgy.restaurantapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.hndgy.restaurantapp.domain.Table;
@@ -19,6 +20,9 @@ public class Order {
     private final List<OrderChoice> choices;
 
 
+    public static Order withTable(Table table){
+        return new Order(null, table, new ArrayList<>());
+    }
     public double getTotalPrice(){
 
         double res = 0d;
@@ -51,7 +55,12 @@ public class Order {
     }
 
     public boolean addChoice(MenuElement menuElement, String comment){
-        OrderChoice orderChoice = new OrderChoice(this, menuElement, comment);
+        OrderChoice orderChoice = new OrderChoice(this.orderId, menuElement, comment);
+        return choices.add(orderChoice);
+    }
+
+    public boolean addChoice(MenuElement menuElement){
+        OrderChoice orderChoice = new OrderChoice(this.orderId, menuElement, "");
         return choices.add(orderChoice);
     }
 

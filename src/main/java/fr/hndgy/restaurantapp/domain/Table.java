@@ -15,8 +15,13 @@ public class Table {
 
     private final String name;
 
+    public static Table withName(String name) {
+        return new Table(name);
+    }
+
     @Value
     public static class TableId {
         private final Long value;
     }
+
 }

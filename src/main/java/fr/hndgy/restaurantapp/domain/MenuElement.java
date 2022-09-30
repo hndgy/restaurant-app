@@ -11,10 +11,18 @@ import lombok.Value;
 public class MenuElement {
 
     private MenuElementId menuElementId;
-    private final double price;
+    private final String name;
+    private final Double price;
     private final MenuElementType type;
 
-  
+
+    public static MenuElement foodWithoutId(String name, Double price){
+        return new MenuElement(name, price, MenuElementType.FOOD);
+    }
+
+    public static MenuElement drinkWithoutId(String name, Double price){
+        return new MenuElement(name, price, MenuElementType.DRINK);
+    }
 
     public static enum MenuElementType{
         FOOD, DRINK
@@ -24,4 +32,5 @@ public class MenuElement {
     public static class MenuElementId{
         private final Long value;
     }
+
 }
