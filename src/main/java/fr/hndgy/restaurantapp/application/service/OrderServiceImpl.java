@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import fr.hndgy.restaurantapp.application.events.ChoiceAddedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
 import fr.hndgy.restaurantapp.application.port.in.AddChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
@@ -44,6 +45,7 @@ public class OrderServiceImpl implements OrderService{
         var menuElement = this.menuElementRepository.getById(choiceCommand.getMenuElementId());
         var orderChoice = order.addChoice(menuElement, choiceCommand.getComment());
         this.orderRepository.updateChoices(order);
+        this.applicationEventPublisher.publishEvent(new ChoiceAddedEvent(this, orderChoice, order.getOrderId()));
         return orderChoice;
     }
 
