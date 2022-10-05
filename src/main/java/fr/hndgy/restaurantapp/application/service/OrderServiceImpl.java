@@ -3,8 +3,10 @@ package fr.hndgy.restaurantapp.application.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
 import fr.hndgy.restaurantapp.application.port.in.AddChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
 import fr.hndgy.restaurantapp.application.port.in.OrderService;
@@ -26,11 +28,14 @@ public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private final TableRepository tableRepository;
     private final MenuElementRepository menuElementRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public Order createOrder(CreateOrderCommand createOrderCommand){
         Table table = tableRepository.getById(createOrderCommand.getTableId());
         Order order = Order.withTableAndNbGuests(table, createOrderCommand.getNbOfGuests());
-        return orderRepository.createOrder(order);
+        order =  orderRepository.createOrder(order);
+        applicationEventPublisher.publishEvent(new OrderCreatedEvent(this,order));
+        return order;
     }
 
     @Override
