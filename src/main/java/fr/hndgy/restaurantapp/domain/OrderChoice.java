@@ -1,5 +1,6 @@
 package fr.hndgy.restaurantapp.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import lombok.AccessLevel;
@@ -12,16 +13,18 @@ import lombok.Value;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderChoice {
+
     private OrderChoiceId orderChoiceId;
     private final MenuElement menuElement;
     private final String comment;
+    private final LocalDateTime creationDateTime;
 
     public static OrderChoice of(MenuElement menuElement, String comment){
-        return new OrderChoice(OrderChoiceId.generate(), menuElement, comment);
+        return new OrderChoice(OrderChoiceId.generate(), menuElement, comment, LocalDateTime.now());
     }
 
-    public static OrderChoice of(OrderChoiceId id,MenuElement menuElement, String comment){
-        return new OrderChoice(id, menuElement, comment);
+    public static OrderChoice of(OrderChoiceId id,MenuElement menuElement, String comment, LocalDateTime creationDateTime){
+        return new OrderChoice(id, menuElement, comment, creationDateTime);
     }
 
     @Value

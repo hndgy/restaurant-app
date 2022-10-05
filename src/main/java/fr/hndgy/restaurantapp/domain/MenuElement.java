@@ -2,14 +2,15 @@ package fr.hndgy.restaurantapp.domain;
 
 import java.util.UUID;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Getter
-@RequiredArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MenuElement {
 
     private MenuElementId menuElementId;
@@ -21,11 +22,11 @@ public class MenuElement {
         return new MenuElement(id, name, price,type);
     }
 
-    public static MenuElement food(String name, Double price){
+    public static MenuElement newFood(String name, Double price){
         return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.FOOD);
     }
 
-    public static MenuElement drink(String name, Double price){
+    public static MenuElement newDrink(String name, Double price){
         return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.DRINK);
     }
 

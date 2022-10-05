@@ -10,7 +10,7 @@ import lombok.Value;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Table {
 
     private TableId tableId;
