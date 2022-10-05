@@ -1,5 +1,6 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.order;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEnt
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableEntityMapper;
 import fr.hndgy.restaurantapp.domain.Order;
 import fr.hndgy.restaurantapp.domain.OrderChoice;
+import fr.hndgy.restaurantapp.domain.OrderStatus;
 import fr.hndgy.restaurantapp.domain.Table;
 import fr.hndgy.restaurantapp.domain.Order.OrderId;
 import lombok.RequiredArgsConstructor;
@@ -24,21 +26,26 @@ public class OrderEntityMapper implements EntityMapper<OrderEntity, Order>{
     private final OrderChoiceEntityMapper orderChoiceEntityMapper;
 
     public OrderEntity toEntity(Order order){
-        OrderEntity entity = new OrderEntity();
+        OrderEntity orderEntity = new OrderEntity();
+
         List<OrderChoiceEntity> choices = new ArrayList<>();
 
         order.getChoices().forEach(choice -> {
-            choices.add(orderChoiceEntityMapper.toEntity(choice));
+            var choiceEntity = orderChoiceEntityMapper.toEntity(choice);
+            choiceEntity.setOrder(orderEntity);
+            choices.add(choiceEntity);
         });
 
-        if(order.getOrderId() != null){
-            entity.setId(order.getOrderId().getValue());
-        }
+        orderEntity.setChoices(choices);
 
-        entity.setChoices(choices);
-        entity.setTable(tableEntityMapper.toEntity(order.getTable()));
+        orderEntity.setId(order.getOrderId().getValue());
 
-        return entity;
+        orderEntity.setTable(tableEntityMapper.toEntity(order.getTable()));
+        orderEntity.setCreationDateTime(Timestamp.valueOf(order.getCreationDateTime()));
+        orderEntity.setOrderStatus(order.getOrderStatus());
+        orderEntity.setNbOfGuests(order.getNbOfGuests());
+
+        return orderEntity;
     }
 
     public Order toDomainObject(OrderEntity orderEntity){
@@ -47,11 +54,17 @@ public class OrderEntityMapper implements EntityMapper<OrderEntity, Order>{
         orderEntity.getChoices().forEach(choice -> {
             choices.add(orderChoiceEntityMapper.toDomainObject(choice));
         });
-        Table table = new Table(
+        Table table = Table.of(
             new Table.TableId(orderEntity.getTable().getId()),
             orderEntity.getTable().getName());
 
-        Order order = new Order(orderId,table,choices);
+        Order order = Order.of(
+            orderId,
+            table,
+            choices,
+            orderEntity.getNbOfGuests(),
+            orderEntity.getCreationDateTime().toLocalDateTime(),
+            orderEntity.getOrderStatus());
         return order;
     }
 }

@@ -5,47 +5,63 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import fr.hndgy.restaurantapp.adapter.out.persistance.order.OrderEntity;
 import fr.hndgy.restaurantapp.application.port.in.AddChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
+import fr.hndgy.restaurantapp.application.port.in.OrderService;
 import fr.hndgy.restaurantapp.application.port.in.RemoveChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.out.MenuElementRepository;
 import fr.hndgy.restaurantapp.application.port.out.OrderChoiceRepository;
 import fr.hndgy.restaurantapp.application.port.out.OrderRepository;
 import fr.hndgy.restaurantapp.application.port.out.TableRepository;
-import fr.hndgy.restaurantapp.domain.MenuElement;
 import fr.hndgy.restaurantapp.domain.Order;
+import fr.hndgy.restaurantapp.domain.OrderChoice;
+import fr.hndgy.restaurantapp.domain.Order.OrderId;
 import fr.hndgy.restaurantapp.domain.Table;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
-    private final OrderChoiceRepository orderChoiceRepository;
     private final TableRepository tableRepository;
     private final MenuElementRepository menuElementRepository;
 
     public Order createOrder(CreateOrderCommand createOrderCommand){
         Table table = tableRepository.getById(createOrderCommand.getTableId());
-        Order order = Order.withTable(table);
+        Order order = Order.withTableAndNbGuests(table, createOrderCommand.getNbOfGuests());
         return orderRepository.createOrder(order);
     }
 
-    public Order addChoice(AddChoiceCommand choiceCommand){
+    @Override
+    public OrderChoice addChoice(AddChoiceCommand choiceCommand){
         var order = this.orderRepository.getOrderById(choiceCommand.getOrderId());
         var menuElement = this.menuElementRepository.getById(choiceCommand.getMenuElementId());
-        order.addChoice(menuElement, choiceCommand.getComment());
+        var orderChoice = order.addChoice(menuElement, choiceCommand.getComment());
         this.orderRepository.updateChoices(order);
-        return order;
+        return orderChoice;
     }
 
-    public Order removeChoice(RemoveChoiceCommand choiceCommand){
+    @Override
+    public void removeChoice(RemoveChoiceCommand choiceCommand){
         this.orderRepository.removeChoice(choiceCommand.getOrderChoiceId());
-        var order = this.orderRepository.getOrderById(choiceCommand.getOrderId());
-        return order;
-
-
     }
+
+    @Override
+    public Order getOrderById(OrderId orderId) {
+        return this.orderRepository.getOrderById(orderId);
+    }
+
+    @Override
+    public List<Order> getAllPendingOrdersToday() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return this.orderRepository.getAllOrders();
+    }
+
+
 }

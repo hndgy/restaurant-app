@@ -46,16 +46,25 @@ public class OrderJpaRepository implements OrderRepository{
 
     @Override
     public void updateChoices(Order order) {
+        var orderEntity = this.orderEntityMapper.toEntity(order);
         for(OrderChoice choice : order.getChoices()){
-            this.orderChoiceDAO.save(
-                this.orderChoiceEntityMapper.toEntity(choice)
-            );
+            var choiceEntity = this.orderChoiceEntityMapper.toEntity(choice);
+            choiceEntity.setOrder(orderEntity);
+            this.orderChoiceDAO.save(choiceEntity);
         }
     }
 
     @Override
     public void removeChoice(OrderChoiceId orderChoiceId) {
         this.orderChoiceDAO.deleteById(orderChoiceId.getValue());
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return this.orderDAO.findAll()
+                    .stream()
+                    .map(this.orderEntityMapper::toDomainObject)
+                    .toList();
     }
 
 

@@ -1,5 +1,8 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 import fr.hndgy.restaurantapp.adapter.out.persistance.common.EntityMapper;
@@ -25,15 +28,11 @@ public class OrderChoiceEntityMapper implements EntityMapper<OrderChoiceEntity, 
     public OrderChoiceEntity toEntity(OrderChoice domainObject) {
         OrderChoiceEntity orderChoiceEntity = new OrderChoiceEntity();
 
-        if(domainObject.getOrderChoiceId() != null)
-            orderChoiceEntity.setId(domainObject.getOrderChoiceId().getValue());
-
-        var order = new OrderEntity();
-        orderChoiceEntity.setOrder(order);
+        orderChoiceEntity.setId(domainObject.getOrderChoiceId().getValue());
 
         var menuElement = this.menuElementEntityMapper.toEntity(domainObject.getMenuElement());
         orderChoiceEntity.setMenuElement(menuElement);
-
+        orderChoiceEntity.setCreationDateTime(Timestamp.valueOf( domainObject.getCreationDateTime()));
         orderChoiceEntity.setComment(domainObject.getComment());
 
         return orderChoiceEntity;
@@ -45,7 +44,8 @@ public class OrderChoiceEntityMapper implements EntityMapper<OrderChoiceEntity, 
         OrderChoice domainObj = OrderChoice.of(
             OrderChoiceId.of(entity.getId()),
             this.menuElementEntityMapper.toDomainObject(entity.getMenuElement()),
-            entity.getComment()
+            entity.getComment(),
+            entity.getCreationDateTime().toLocalDateTime()
         );
         return domainObj;
     }

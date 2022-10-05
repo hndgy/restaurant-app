@@ -1,5 +1,8 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.EmbeddedId;
@@ -10,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
@@ -40,4 +45,6 @@ public class OrderChoiceEntity {
     private MenuElementEntity menuElement;
 
     private String comment;
+
+    private Timestamp creationDateTime;
 }

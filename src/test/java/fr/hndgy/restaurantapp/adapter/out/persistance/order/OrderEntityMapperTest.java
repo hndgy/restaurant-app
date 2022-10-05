@@ -8,14 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntityMapper;
-import fr.hndgy.restaurantapp.domain.MenuElement;
-import fr.hndgy.restaurantapp.domain.Order;
-import fr.hndgy.restaurantapp.domain.Table;
-import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementId;
-import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
-import fr.hndgy.restaurantapp.domain.Table.TableId;
 
-@SpringBootTest
 public class OrderEntityMapperTest {
     
     @InjectMocks
@@ -25,7 +18,12 @@ public class OrderEntityMapperTest {
     OrderChoiceEntityMapper orderChoiceEntityMapper;
 
     @Test
-    void toEntityTest(){
-       
+    public void toEntity(){
+
+    }
+    
+    @Test
+    public void toDomain(){
+
     }
 }

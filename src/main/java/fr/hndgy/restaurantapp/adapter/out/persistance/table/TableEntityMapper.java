@@ -22,7 +22,7 @@ public class TableEntityMapper implements EntityMapper<TableEntity, Table>{
     @Override
     public Table toDomainObject(TableEntity entity) {
         TableId tableId = new TableId(entity.getId());
-        Table domain = new Table(tableId, entity.getName());
+        Table domain = Table.of(tableId, entity.getName());
         return domain;
     }
 }

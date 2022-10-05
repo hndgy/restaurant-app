@@ -21,14 +21,15 @@ public class Order {
     private final List<OrderChoice> choices;
     private final Integer nbOfGuests;
     private final LocalDateTime creationDateTime;
+    private final OrderStatus orderStatus;
 
 
     public static Order withTableAndNbGuests(Table table, int nbOfGuests){
-        return new Order(OrderId.generate(), table, new ArrayList<>(), nbOfGuests, LocalDateTime.now());
+        return new Order(OrderId.generate(), table, new ArrayList<>(), nbOfGuests, LocalDateTime.now(), OrderStatus.PROCESSING);
     }
 
-    public static Order of(OrderId orderId, Table table, List<OrderChoice> choices, int nbOfGuests, LocalDateTime creationDateTime){
-        return new Order(orderId, table, choices, nbOfGuests, creationDateTime);
+    public static Order of(OrderId orderId, Table table, List<OrderChoice> choices, int nbOfGuests, LocalDateTime creationDateTime, OrderStatus orderStatus){
+        return new Order(orderId, table, choices, nbOfGuests, creationDateTime, orderStatus);
     }
 
     public int getNbElement(){

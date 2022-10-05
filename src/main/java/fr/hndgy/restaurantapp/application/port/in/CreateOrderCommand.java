@@ -6,4 +6,5 @@ import lombok.Value;
 @Value
 public class CreateOrderCommand {
     private TableId tableId;
+    private Integer nbOfGuests;
 }

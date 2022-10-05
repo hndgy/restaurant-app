@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class CreateOrderDto {
     private String tableId;
+    private int nbOfGuests;
 }

@@ -24,12 +24,12 @@ public class MenuElementEntityMapper implements EntityMapper<MenuElementEntity, 
     public MenuElement toDomainObject(MenuElementEntity entity) {
 
         MenuElement.MenuElementId id =  new MenuElement.MenuElementId(entity.getId());
-        MenuElement menuElement = new MenuElement(
+        MenuElement menuElement = MenuElement.of(
             id,
             entity.getName(),
             entity.getPrice(),
             entity.getType()
-            );
+        );
         return menuElement;
     }
 }

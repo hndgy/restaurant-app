@@ -1,5 +1,7 @@
 package fr.hndgy.restaurantapp;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +19,7 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceKey
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableDAO;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableEntity;
 import fr.hndgy.restaurantapp.domain.MenuElement;
+import fr.hndgy.restaurantapp.domain.OrderStatus;
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
 
 @SpringBootApplication
@@ -52,12 +55,16 @@ public class RestaurantAppApplication {
             var order = new OrderEntity();
             order.setId(id);
             order.setTable(table);
+            order.setCreationDateTime(Timestamp.valueOf(LocalDateTime.now()));
+            order.setNbOfGuests(2);
+            order.setOrderStatus(OrderStatus.PROCESSING);
             order = orderDAO.save(order);
             System.out.println("ORDER ID = " + order.getId().toString() );
 
             var choice = new OrderChoiceEntity();
             //choice.setId(new OrderChoiceKey(plat.getId(), order.getId()));
             choice.setMenuElement(plat);
+            choice.setCreationDateTime(Timestamp.valueOf(LocalDateTime.now()));
             choice.setOrder(order);
             choice.setComment("test");
             choice.setId(id);

@@ -23,12 +23,15 @@ public class OrderRepositoryTest {
     @Test
     void createOrder(){
         Table table = this.tableRepository.create(Table.of("Test table"));
-        Order order = Order.withTable(table);
+        Order order = Order.withTableAndNbGuests(table,2);
 
         Order saved = this.orderRepository.createOrder(order);
 
-        assertEquals(saved.getTable().getTableId(), saved.getTable().getTableId());
-        assertNotNull(saved.getOrderId());
+        assertEquals(saved.getTable().getTableId(), order.getTable().getTableId());
+        assertEquals(saved.getNbElement(), order.getNbElement());
+        assertEquals(saved.getNbOfGuests(), order.getNbOfGuests());
+        assertEquals(saved.getCreationDateTime(), order.getCreationDateTime());
+        assertEquals(saved.getOrderId().getValue(), order.getOrderId().getValue());
     }
 
 

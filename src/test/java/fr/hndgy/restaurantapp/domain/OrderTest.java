@@ -2,7 +2,6 @@ package fr.hndgy.restaurantapp.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +12,8 @@ public class OrderTest {
     @Test
     void getNbElementWithoutChoice(){
         TableId tableId = TableId.generate();
-        Table table = new Table(tableId,"Test table");
-        Order order = Order.withTable(table);
+        Table table = Table.of(tableId,"Test table");
+        Order order = Order.withTableAndNbGuests(table,2);
 
         assertEquals(0, order.getNbElement());
     }

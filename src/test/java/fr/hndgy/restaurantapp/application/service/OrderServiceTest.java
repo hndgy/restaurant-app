@@ -28,7 +28,7 @@ import fr.hndgy.restaurantapp.domain.Table.TableId;
 public class OrderServiceTest {
 
     @InjectMocks
-    OrderService orderService;
+    OrderServiceImpl orderService;
 
     @MockBean
     OrderRepository orderRepository;
@@ -43,14 +43,14 @@ public class OrderServiceTest {
     public void createOrderTest(){
         //Arrange
         TableId tableId = TableId.generate();
-        Table table = new Table(tableId,"Test table");
-        Order order = Order.withTable(table);
+        Table table = Table.of(tableId,"Test table");
+        Order order = Order.withTableAndNbGuests(table, 2);
 
         when(this.tableRepository.getById(tableId)).thenReturn(table);
         when(this.orderRepository.createOrder(any(Order.class))).thenReturn(order);
 
         //Act
-        Order saved = this.orderService.createOrder(new CreateOrderCommand(tableId));
+        Order saved = this.orderService.createOrder(new CreateOrderCommand(tableId,2));
 
         //Assert
         assertEquals(0,saved.getNbElement() );
