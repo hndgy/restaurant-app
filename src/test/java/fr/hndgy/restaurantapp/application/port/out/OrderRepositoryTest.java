@@ -22,7 +22,7 @@ public class OrderRepositoryTest {
 
     @Test
     void createOrder(){
-        Table table = this.tableRepository.create(Table.withName("Test table"));
+        Table table = this.tableRepository.create(Table.of("Test table"));
         Order order = Order.withTable(table);
 
         Order saved = this.orderRepository.createOrder(order);
@@ -30,4 +30,14 @@ public class OrderRepositoryTest {
         assertEquals(saved.getTable().getTableId(), saved.getTable().getTableId());
         assertNotNull(saved.getOrderId());
     }
+
+
+
+    @Test
+    void updateOrder(){
+        //TODO
+    }
+
+
+
 }

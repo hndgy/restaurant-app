@@ -15,8 +15,8 @@ public class TableJpaRepository implements TableRepository{
 
     @Override
     public Table getById(TableId tableId) {
-        // TODO Auto-generated method stub
-        return null;
+        TableEntity tableEntity = this.tableDAO.findById(tableId.getValue()).get();
+        return this.tableEntityMapper.toDomainObject(tableEntity);
     }
 
     @Override

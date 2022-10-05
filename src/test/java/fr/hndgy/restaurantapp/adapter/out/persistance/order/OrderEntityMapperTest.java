@@ -26,12 +26,6 @@ public class OrderEntityMapperTest {
 
     @Test
     void toEntityTest(){
-        Order order  = Order.withTable(new Table(new TableId(1L), "test table"));
-        MenuElementId plat1id = new MenuElementId(1L);
-        MenuElement plat1 = new MenuElement(plat1id,"BoBun", 10.,MenuElementType.FOOD);
-        String comment = "sans oignon";
-        order.addChoice(plat1, comment);
-
-        this.orderEntityMapper.toEntity(order);
+       
     }
 }

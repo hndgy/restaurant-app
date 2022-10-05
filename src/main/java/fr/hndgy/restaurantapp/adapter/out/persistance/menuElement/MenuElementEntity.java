@@ -1,11 +1,15 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.menuElement;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.Type;
 
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
 import lombok.AllArgsConstructor;
@@ -20,8 +24,8 @@ import lombok.Setter;
 @Setter
 public class MenuElementEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
 
     private String name;
     

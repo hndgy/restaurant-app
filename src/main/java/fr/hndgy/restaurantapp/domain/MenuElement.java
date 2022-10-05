@@ -1,5 +1,7 @@
 package fr.hndgy.restaurantapp.domain;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +17,16 @@ public class MenuElement {
     private final Double price;
     private final MenuElementType type;
 
-
-    public static MenuElement foodWithoutId(String name, Double price){
-        return new MenuElement(name, price, MenuElementType.FOOD);
+    public static MenuElement of(MenuElementId id, String name, Double price, MenuElementType type){
+        return new MenuElement(id, name, price,type);
     }
 
-    public static MenuElement drinkWithoutId(String name, Double price){
-        return new MenuElement(name, price, MenuElementType.DRINK);
+    public static MenuElement food(String name, Double price){
+        return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.FOOD);
+    }
+
+    public static MenuElement drink(String name, Double price){
+        return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.DRINK);
     }
 
     public static enum MenuElementType{
@@ -30,7 +35,13 @@ public class MenuElement {
 
     @Value
     public static class MenuElementId{
-        private final Long value;
+        private final UUID value;
+        public static MenuElementId of(UUID uuid){
+            return new MenuElementId(uuid);
+        }
+        public static MenuElementId generate(){
+            return new MenuElementId(UUID.randomUUID());
+        }
     }
 
 }

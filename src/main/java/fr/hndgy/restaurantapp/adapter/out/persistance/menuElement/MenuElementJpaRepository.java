@@ -1,5 +1,7 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.menuElement;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Repository;
 
 import fr.hndgy.restaurantapp.application.port.out.MenuElementRepository;
@@ -15,8 +17,8 @@ public class MenuElementJpaRepository implements MenuElementRepository{
 
     @Override
     public MenuElement getById(MenuElementId idElement) {
-        // TODO Auto-generated method stub
-        return null;
+        var entity =  this.menuElementDAO.findById(idElement.getValue()).get();
+        return this.menuElementEntityMapper.toDomainObject(entity);
     }
 
     @Override

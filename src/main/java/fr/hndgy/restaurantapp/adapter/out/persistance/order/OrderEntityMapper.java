@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class OrderEntityMapper implements EntityMapper<OrderEntity, Order>{
-    
+
     private final TableEntityMapper tableEntityMapper;
     private final OrderChoiceEntityMapper orderChoiceEntityMapper;
 

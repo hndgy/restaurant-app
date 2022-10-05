@@ -2,8 +2,11 @@ package fr.hndgy.restaurantapp.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import fr.hndgy.restaurantapp.domain.Table;
+import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementId;
+import fr.hndgy.restaurantapp.domain.OrderChoice.OrderChoiceId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,53 +24,37 @@ public class Order {
 
 
     public static Order withTable(Table table){
-        return new Order(null, table, new ArrayList<>());
-    }
-    public double getTotalPrice(){
-
-        double res = 0d;
-        for (OrderChoice orderChoice  : choices) {
-            res+= orderChoice.getMenuElement().getPrice();
-        }
-        return res;
+        return new Order(OrderId.generate(), table, new ArrayList<>());
     }
 
-    public double getTotalFoodPrice(){
-        double res = 0d;
-        for (OrderChoice orderChoice : choices) {
-            if(orderChoice.getMenuElement().getType().equals(MenuElement.MenuElementType.FOOD))
-                res+= orderChoice.getMenuElement().getPrice();
-        }
-        return res;
-    }
-
-    public double getTotalDrinkPrice(){
-        double res = 0d;
-        for (OrderChoice orderChoice : choices) {
-            if(orderChoice.getMenuElement().getType().equals(MenuElement.MenuElementType.DRINK))
-                res+= orderChoice.getMenuElement().getPrice();
-        }
-        return res;
+    public static Order of(OrderId orderId, Table table, List<OrderChoice> choices){
+        return new Order(orderId, table, choices);
     }
 
     public int getNbElement(){
         return this.choices.size();
     }
 
-    public boolean addChoice(MenuElement menuElement, String comment){
-        OrderChoice orderChoice = new OrderChoice(this.orderId, menuElement, comment);
-        return choices.add(orderChoice);
+    public OrderChoice addChoice(MenuElement menuElement, String comment){
+        OrderChoice orderChoice = OrderChoice.of(menuElement, comment);
+        choices.add(orderChoice);
+        return orderChoice;
     }
 
-    public boolean addChoice(MenuElement menuElement){
-        OrderChoice orderChoice = new OrderChoice(this.orderId, menuElement, "");
-        return choices.add(orderChoice);
+    public boolean removeChoice(OrderChoiceId orderChoiceId){
+        return this.choices.removeIf(oc -> oc.getOrderChoiceId().equals(orderChoiceId));
     }
 
 
     @Value
     public static class OrderId{
-        private final Long value;
+        private final UUID value;
+        public static OrderId of(UUID uuid){
+            return new OrderId(uuid);
+        }
+        public static OrderId generate(){
+            return new OrderId(UUID.randomUUID());
+        }
     }
 
 }

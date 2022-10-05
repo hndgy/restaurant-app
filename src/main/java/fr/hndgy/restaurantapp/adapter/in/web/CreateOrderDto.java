@@ -6,6 +6,5 @@ import lombok.Data;
 
 @Data
 public class CreateOrderDto {
-    private Long tableId;
-    private Map<Long, String> choicesWithComments;
+    private String tableId;
 }
