@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
     public OrderChoice addChoice(AddChoiceCommand choiceCommand){
         var order = this.orderRepository.getOrderById(choiceCommand.getOrderId());
         var menuElement = this.menuElementRepository.getById(choiceCommand.getMenuElementId());
-        var orderChoice = order.addChoice(menuElement, choiceCommand.getComment());
+        var orderChoice = order.addChoice(menuElement, choiceCommand.getComment(), choiceCommand.getMealCategory());
         this.orderRepository.updateChoices(order);
         this.applicationEventPublisher.publishEvent(new ChoiceAddedEvent(this, orderChoice, order.getOrderId()));
         return orderChoice;

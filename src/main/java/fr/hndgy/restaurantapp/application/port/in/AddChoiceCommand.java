@@ -1,6 +1,7 @@
 package fr.hndgy.restaurantapp.application.port.in;
 
 
+import fr.hndgy.restaurantapp.domain.MealCategory;
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementId;
 import fr.hndgy.restaurantapp.domain.Order.OrderId;
 import lombok.Data;
@@ -10,4 +11,5 @@ public class AddChoiceCommand {
     private MenuElementId menuElementId;
     private OrderId orderId;
     private String comment;
+    private MealCategory mealCategory;
 }

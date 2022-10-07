@@ -2,9 +2,12 @@ package fr.hndgy.restaurantapp.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
 import fr.hndgy.restaurantapp.domain.OrderChoice.OrderChoiceId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,6 +39,23 @@ public class Order {
         return this.choices.size();
     }
 
+    public Map<MealCategory,List<OrderChoice>> getChoicesByStep(){
+
+        Map<MealCategory,List<OrderChoice>> res = new HashMap<MealCategory,List<OrderChoice>>();
+
+        for(OrderChoice choice : this.choices){
+            var key = choice.getMealCategory();
+            if(!res.containsKey(key)){
+                res.put(key, List.of(choice));
+            }else{
+                var newChoices = res.get(key);
+                newChoices.add(choice);
+                res.replace(key, newChoices);
+            }
+        }
+        return res;
+    }
+
     public double getTotalPrice(){
         double res = 0.;
         for(OrderChoice choice : this.choices){
@@ -48,8 +68,8 @@ public class Order {
         return this.getTotalPrice() / this.nbOfGuests;
     }
 
-    public OrderChoice addChoice(MenuElement menuElement, String comment){
-        OrderChoice orderChoice = OrderChoice.of(menuElement, comment);
+    public OrderChoice addChoice(MenuElement menuElement, String comment, MealCategory mealCategory){
+        OrderChoice orderChoice = OrderChoice.of(menuElement, comment, mealCategory);
         choices.add(orderChoice);
         return orderChoice;
     }

@@ -18,6 +18,7 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEnt
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceKey;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableDAO;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableEntity;
+import fr.hndgy.restaurantapp.domain.MealCategory;
 import fr.hndgy.restaurantapp.domain.MenuElement;
 import fr.hndgy.restaurantapp.domain.OrderStatus;
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
@@ -67,6 +68,7 @@ public class RestaurantAppApplication {
             choice.setCreationDateTime(Timestamp.valueOf(LocalDateTime.now()));
             choice.setOrder(order);
             choice.setComment("test");
+            choice.setMealCategory(MealCategory.STARTERS);
             choice.setId(id);
 
             choice = orderChoiceDAO.save(choice);

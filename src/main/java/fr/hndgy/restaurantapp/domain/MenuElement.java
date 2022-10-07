@@ -22,14 +22,6 @@ public class MenuElement {
         return new MenuElement(id, name, price,type);
     }
 
-    public static MenuElement newFood(String name, Double price){
-        return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.FOOD);
-    }
-
-    public static MenuElement newDrink(String name, Double price){
-        return new MenuElement(MenuElementId.generate(), name, price, MenuElementType.DRINK);
-    }
-
     public static enum MenuElementType{
         FOOD, DRINK
     }

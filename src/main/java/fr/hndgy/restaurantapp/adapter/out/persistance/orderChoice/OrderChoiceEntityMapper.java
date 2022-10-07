@@ -34,6 +34,7 @@ public class OrderChoiceEntityMapper implements EntityMapper<OrderChoiceEntity, 
         orderChoiceEntity.setMenuElement(menuElement);
         orderChoiceEntity.setCreationDateTime(Timestamp.valueOf( domainObject.getCreationDateTime()));
         orderChoiceEntity.setComment(domainObject.getComment());
+        orderChoiceEntity.setMealCategory(domainObject.getMealCategory());
 
         return orderChoiceEntity;
     }
@@ -45,7 +46,8 @@ public class OrderChoiceEntityMapper implements EntityMapper<OrderChoiceEntity, 
             OrderChoiceId.of(entity.getId()),
             this.menuElementEntityMapper.toDomainObject(entity.getMenuElement()),
             entity.getComment(),
-            entity.getCreationDateTime().toLocalDateTime()
+            entity.getCreationDateTime().toLocalDateTime(),
+            entity.getMealCategory()
         );
         return domainObj;
     }

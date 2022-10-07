@@ -19,6 +19,7 @@ import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
 import fr.hndgy.restaurantapp.application.port.in.OrderService;
 import fr.hndgy.restaurantapp.application.port.in.RemoveChoiceCommand;
 import fr.hndgy.restaurantapp.application.service.OrderServiceImpl;
+import fr.hndgy.restaurantapp.domain.MealCategory;
 import fr.hndgy.restaurantapp.domain.Order;
 import fr.hndgy.restaurantapp.domain.OrderChoice;
 import fr.hndgy.restaurantapp.domain.Table;
@@ -27,10 +28,12 @@ import fr.hndgy.restaurantapp.domain.Order.OrderId;
 import fr.hndgy.restaurantapp.domain.OrderChoice.OrderChoiceId;
 import fr.hndgy.restaurantapp.domain.Table.TableId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("api/order")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
 
      private final OrderService orderService;
@@ -56,13 +59,15 @@ public class OrderController {
 
 
      @PostMapping("/{orderId}/choice")
-     public OrderChoice addChoice(@PathVariable String orderId, @RequestBody AddChoiceDto addOrRemoveChoiceDto){
+     public OrderChoice addChoice(@PathVariable String orderId, @RequestBody AddChoiceDto addChoiceDto){
 
-          MenuElementId menuElementId = MenuElementId.of(UUID.fromString(addOrRemoveChoiceDto.getMenuElementId()));
+          MenuElementId menuElementId = MenuElementId.of(UUID.fromString(addChoiceDto.getMenuElementId()));
           var command = new AddChoiceCommand();
           command.setOrderId(OrderId.of(UUID.fromString(orderId)));
           command.setMenuElementId(menuElementId);
-          command.setComment(addOrRemoveChoiceDto.getComment());
+          command.setComment(addChoiceDto.getComment());
+          command.setMealCategory(MealCategory.valueOf(addChoiceDto.getMealCategory()));
+
           return this.orderService.addChoice(command);
      }
 

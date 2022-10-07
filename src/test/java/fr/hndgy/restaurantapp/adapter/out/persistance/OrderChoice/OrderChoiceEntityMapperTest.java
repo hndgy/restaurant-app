@@ -18,6 +18,7 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.menuElement.MenuElementEnt
 import fr.hndgy.restaurantapp.adapter.out.persistance.menuElement.MenuElementEntityMapper;
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntity;
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntityMapper;
+import fr.hndgy.restaurantapp.domain.MealCategory;
 import fr.hndgy.restaurantapp.domain.MenuElement;
 import fr.hndgy.restaurantapp.domain.OrderChoice;
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementId;
@@ -38,7 +39,8 @@ public class OrderChoiceEntityMapperTest {
 
         OrderChoice orderChoice = OrderChoice.of(
             menuElement,
-            "test");
+            "test",
+            MealCategory.DESSERTS);
 
         MenuElementEntity menuElementEntity = new MenuElementEntity();
         menuElementEntity.setId(menuElement.getMenuElementId().getValue());

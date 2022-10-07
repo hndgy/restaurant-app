@@ -18,13 +18,14 @@ public class OrderChoice {
     private final MenuElement menuElement;
     private final String comment;
     private final LocalDateTime creationDateTime;
+    private final MealCategory mealCategory;
 
-    public static OrderChoice of(MenuElement menuElement, String comment){
-        return new OrderChoice(OrderChoiceId.generate(), menuElement, comment, LocalDateTime.now());
+    public static OrderChoice of(MenuElement menuElement, String comment, MealCategory mealCategory){
+        return new OrderChoice(OrderChoiceId.generate(), menuElement, comment, LocalDateTime.now(),mealCategory);
     }
 
-    public static OrderChoice of(OrderChoiceId id,MenuElement menuElement, String comment, LocalDateTime creationDateTime){
-        return new OrderChoice(id, menuElement, comment, creationDateTime);
+    public static OrderChoice of(OrderChoiceId id,MenuElement menuElement, String comment, LocalDateTime creationDateTime,  MealCategory mealCategory){
+        return new OrderChoice(id, menuElement, comment, creationDateTime, mealCategory);
     }
 
     @Value

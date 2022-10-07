@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import org.hibernate.annotations.Type;
 
 import fr.hndgy.restaurantapp.adapter.out.persistance.menuElement.MenuElementEntity;
 import fr.hndgy.restaurantapp.adapter.out.persistance.order.OrderEntity;
+import fr.hndgy.restaurantapp.domain.MealCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,4 +50,7 @@ public class OrderChoiceEntity {
     private String comment;
 
     private Timestamp creationDateTime;
+
+    @Enumerated(EnumType.STRING)
+    private MealCategory mealCategory;
 }

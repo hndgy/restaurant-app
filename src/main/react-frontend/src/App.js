@@ -1,8 +1,10 @@
+import KitchenOrders from "./pages/KitchenOrders";
 
 function App() {
   return (
-    <div>
-    </div>
+    <>
+      <KitchenOrders/>
+    </>
   );
 }
 
