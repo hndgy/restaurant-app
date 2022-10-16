@@ -39,7 +39,7 @@ public class Order {
         return this.choices.size();
     }
 
-    public Map<MealCategory,List<OrderChoice>> getChoicesByStep(){
+    /*public Map<MealCategory,List<OrderChoice>> getChoicesByStep(){
 
         Map<MealCategory,List<OrderChoice>> res = new HashMap<MealCategory,List<OrderChoice>>();
 
@@ -54,7 +54,7 @@ public class Order {
             }
         }
         return res;
-    }
+    }*/
 
     public double getTotalPrice(){
         double res = 0.;

@@ -15,11 +15,9 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.order.OrderDAO;
 import fr.hndgy.restaurantapp.adapter.out.persistance.order.OrderEntity;
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceDAO;
 import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceEntity;
-import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceKey;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableDAO;
 import fr.hndgy.restaurantapp.adapter.out.persistance.table.TableEntity;
 import fr.hndgy.restaurantapp.domain.MealCategory;
-import fr.hndgy.restaurantapp.domain.MenuElement;
 import fr.hndgy.restaurantapp.domain.OrderStatus;
 import fr.hndgy.restaurantapp.domain.MenuElement.MenuElementType;
 

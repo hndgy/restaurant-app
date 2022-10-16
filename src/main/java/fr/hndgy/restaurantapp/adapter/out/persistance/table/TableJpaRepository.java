@@ -1,5 +1,7 @@
 package fr.hndgy.restaurantapp.adapter.out.persistance.table;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import fr.hndgy.restaurantapp.application.port.out.TableRepository;
@@ -24,5 +26,23 @@ public class TableJpaRepository implements TableRepository{
         TableEntity entity = this.tableEntityMapper.toEntity(table);
         TableEntity saved = this.tableDAO.save(entity);
         return this.tableEntityMapper.toDomainObject(saved);
+    }
+
+    @Override
+    public List<Table> getAllDispo() {
+       
+        return this.tableDAO.findAllDispo()
+                    .stream()
+                    .map(this.tableEntityMapper::toDomainObject)
+                    .toList();
+    }
+
+    @Override
+    public List<Table> getAll() {
+        
+        return this.tableDAO.findAll()
+                    .stream()
+                    .map(this.tableEntityMapper::toDomainObject)
+                    .toList();
     }
 }

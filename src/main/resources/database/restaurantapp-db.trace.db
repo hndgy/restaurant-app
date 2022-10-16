@@ -1,3 +1,27 @@
 2022-10-06 10:51:29 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]MENU_ELEMENT_ENTITY"; expected "MERGE"; SQL statement:
 MENU_ELEMENT_ENTITY [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]order CASCADE "; expected "identifier"; SQL statement:
+drop table if exists order CASCADE  [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]table CASCADE "; expected "identifier"; SQL statement:
+drop table if exists table CASCADE  [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]order (id varchar(255) not null, creation_date_time timestamp, nb_of_guests integer, order_status varchar(255), table_id varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table order (id varchar(255) not null, creation_date_time timestamp, nb_of_guests integer, order_status varchar(255), table_id varchar(255), primary key (id)) [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]table (id varchar(255) not null, name varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table table (id varchar(255) not null, name varchar(255), primary key (id)) [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table [*]order add constraint FK497s98x2hl3eos7864v4mfcy2 foreign key (table_id) references table"; expected "identifier"; SQL statement:
+alter table order add constraint FK497s98x2hl3eos7864v4mfcy2 foreign key (table_id) references table [42001-214]
+2022-10-16 11:54:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table order_choice add constraint FK265373r1u8bkeod6i1p7ads55 foreign key (order_id) references [*]order"; expected "identifier"; SQL statement:
+alter table order_choice add constraint FK265373r1u8bkeod6i1p7ads55 foreign key (order_id) references order [42001-214]
+2022-10-16 11:54:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]order CASCADE "; expected "identifier"; SQL statement:
+drop table if exists order CASCADE  [42001-214]
+2022-10-16 11:54:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]table CASCADE "; expected "identifier"; SQL statement:
+drop table if exists table CASCADE  [42001-214]

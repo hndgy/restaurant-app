@@ -1,4 +1,4 @@
-package fr.hndgy.restaurantapp.adapter.in.web;
+package fr.hndgy.restaurantapp.adapter.in.web.dto;
 
 import fr.hndgy.restaurantapp.domain.MealCategory;
 import lombok.Data;

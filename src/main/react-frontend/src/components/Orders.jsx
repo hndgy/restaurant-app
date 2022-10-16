@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { Stomp } from '@stomp/stompjs';
 import SockJs from "sockjs-client/dist/sockjs"
+import { Link } from 'react-router-dom';
 
-function KitchenOrders() {
+function Orders() {
 
     const [isConnected, setConnected] = useState(false);
     const [orders, setOrders] = useState([]);
@@ -12,7 +13,10 @@ function KitchenOrders() {
     useEffect(() => {
         fetch("/api/order")
             .then(res => res.json())
-            .then(data => setOrders(data));
+            .then(data => {
+                console.log(data);
+                setOrders(data);
+            });
     },[]);
     var socket = new SockJs("http://localhost:8080/ws-orders");
 
@@ -34,11 +38,20 @@ function KitchenOrders() {
 
   return (
     <div className='container mt-5 text-center'>
-        {isConnected && orders &&
+        <div className="row mb-3">
+            <div className="col-sm-6">
+                <h3>Commandes en cours: {orders.length}</h3>
+            </div>
+            <div className="col-sm-6">
+                <Link to={'/newOrder'} className='btn btn-dark'>Nouvelle commande +</Link>
+            </div>
+        </div>
+        {isConnected && orders
+            &&
             orders.map(order => {
                 return (
                     <div className="card border-dark mb-3" key={order.orderId.value}>
-                    <div className="card-header">{order.table.name} ({order.creationDateTime})</div>
+                    <div className="card-header">{order.table.name} ({order.creationDateTime}) <button className='btn btn-secondary'>Annuler</button></div>
                     <div className="card-body">
                         <h6>{order.nbOfGuests} personne(s)</h6>
 
@@ -65,4 +78,4 @@ function KitchenOrders() {
   )
 }
 
-export default KitchenOrders
+export default Orders
