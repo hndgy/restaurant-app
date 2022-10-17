@@ -54,7 +54,7 @@ function NewOrder() {
 
             <div className="form-group">
                 <div className="form-floating mb-3">
-                    <input type="number" className="form-control" defaultValue={0} name="nbPers"/>
+                    <input type="number" className="form-control" defaultValue={1} name="nbPers"/>
                     <label >Nombre de personnes</label>
                 </div>
             </div>

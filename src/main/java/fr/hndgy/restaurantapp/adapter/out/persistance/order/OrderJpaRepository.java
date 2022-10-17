@@ -14,6 +14,7 @@ import fr.hndgy.restaurantapp.adapter.out.persistance.orderChoice.OrderChoiceJpa
 import fr.hndgy.restaurantapp.application.port.out.OrderRepository;
 import fr.hndgy.restaurantapp.domain.Order;
 import fr.hndgy.restaurantapp.domain.OrderChoice;
+import fr.hndgy.restaurantapp.domain.OrderStatus;
 import fr.hndgy.restaurantapp.domain.OrderChoice.OrderChoiceId;
 import fr.hndgy.restaurantapp.domain.Order.OrderId;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,15 @@ public class OrderJpaRepository implements OrderRepository{
                     .stream()
                     .map(this.orderEntityMapper::toDomainObject)
                     .toList();
+    }
+
+    @Override
+    public List<Order> getAllNotEndedOrders() {
+        return this.orderDAO.findAll()
+                .stream()
+                .filter(order ->  !order.getOrderStatus().equals(OrderStatus.ENDED))
+                .map(this.orderEntityMapper::toDomainObject)
+                .toList();
     }
 
 

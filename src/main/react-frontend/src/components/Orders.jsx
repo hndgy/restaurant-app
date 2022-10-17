@@ -51,7 +51,10 @@ function Orders() {
             orders.map(order => {
                 return (
                     <div className="card border-dark mb-3" key={order.orderId.value}>
-                    <div className="card-header">{order.table.name} ({order.creationDateTime}) <button className='btn btn-secondary'>Annuler</button></div>
+                    <div className="card-header">{order.table.name} ({order.creationDateTime}) 
+                        <Link className='btn btn-warning mr-2' to={`/editOrder/${order.orderId.value}`}> Modifier </Link>
+                        <button className='btn btn-secondary'>Annuler</button>
+                    </div>
                     <div className="card-body">
                         <h6>{order.nbOfGuests} personne(s)</h6>
 

@@ -17,12 +17,19 @@ class OrderService{
         );
     }
 
+    getById(orderId){
+        return fetch(`/api/order/${orderId}`);
+    }
+
     addChoice(orderId, elementId){
 
     }
 
-    removeChoice(orderId, elementId){
-
+    removeChoice(orderId, choiceId){
+        return fetch(`/api/order/${orderId}/choice/${choiceId}`,
+        {
+            method: 'DELETE'
+        });
     }
 
     getAllInProgress(){

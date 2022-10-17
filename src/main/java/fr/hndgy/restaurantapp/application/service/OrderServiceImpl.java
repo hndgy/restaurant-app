@@ -1,6 +1,5 @@
 package fr.hndgy.restaurantapp.application.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,7 +12,6 @@ import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
 import fr.hndgy.restaurantapp.application.port.in.OrderService;
 import fr.hndgy.restaurantapp.application.port.in.RemoveChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.out.MenuElementRepository;
-import fr.hndgy.restaurantapp.application.port.out.OrderChoiceRepository;
 import fr.hndgy.restaurantapp.application.port.out.OrderRepository;
 import fr.hndgy.restaurantapp.application.port.out.TableRepository;
 import fr.hndgy.restaurantapp.domain.Order;
@@ -61,8 +59,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Order> getAllPendingOrdersToday() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.orderRepository.getAllNotEndedOrders();
     }
 
     @Override

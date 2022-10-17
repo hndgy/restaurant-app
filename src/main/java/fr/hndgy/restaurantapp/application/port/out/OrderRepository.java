@@ -12,4 +12,5 @@ public interface OrderRepository {
     void updateChoices(Order order);
     void removeChoice(OrderChoiceId orderChoiceId);
     List<Order> getAllOrders();
+    List<Order> getAllNotEndedOrders();
 }
