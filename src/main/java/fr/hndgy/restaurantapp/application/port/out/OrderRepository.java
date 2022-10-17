@@ -13,4 +13,6 @@ public interface OrderRepository {
     void removeChoice(OrderChoiceId orderChoiceId);
     List<Order> getAllOrders();
     List<Order> getAllNotEndedOrders();
+
+    void deleteOrder(OrderId orderId);
 }

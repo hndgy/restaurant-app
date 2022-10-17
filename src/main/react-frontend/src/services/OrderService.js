@@ -39,6 +39,14 @@ class OrderService{
     getAll(){
         return fetch("/api/order");
     }
+
+    removeOrder(orderId){
+        return fetch(`/api/order/${orderId}`,
+            {
+                method: 'DELETE'
+            }
+        );
+    }
 }
 
 export default new OrderService();

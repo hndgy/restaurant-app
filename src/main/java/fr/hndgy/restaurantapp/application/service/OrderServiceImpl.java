@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import fr.hndgy.restaurantapp.application.events.ChoiceAddedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
+import fr.hndgy.restaurantapp.application.events.OrderDeletedEvent;
 import fr.hndgy.restaurantapp.application.port.in.AddChoiceCommand;
 import fr.hndgy.restaurantapp.application.port.in.CreateOrderCommand;
 import fr.hndgy.restaurantapp.application.port.in.OrderService;
@@ -65,6 +66,13 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> getAllOrders() {
         return this.orderRepository.getAllOrders();
+    }
+
+    @Override
+    public void removeOrder(OrderId orderId) {
+        this.orderRepository.deleteOrder(orderId);
+        this.applicationEventPublisher.publishEvent(new OrderDeletedEvent(this, orderId));
+        
     }
 
 

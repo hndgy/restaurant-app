@@ -84,4 +84,9 @@ public class OrderController {
 
           this.orderService.removeChoice(command);
      }
+
+     @DeleteMapping("/{orderId}")
+     public void removeOrder(@PathVariable String orderId){
+          this.orderService.removeOrder(OrderId.of(UUID.fromString(orderId)));
+     }
 }

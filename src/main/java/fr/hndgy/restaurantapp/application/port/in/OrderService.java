@@ -20,4 +20,6 @@ public interface OrderService {
 
     List<Order> getAllOrders();
 
+    void removeOrder(OrderId orderId);
+
 }

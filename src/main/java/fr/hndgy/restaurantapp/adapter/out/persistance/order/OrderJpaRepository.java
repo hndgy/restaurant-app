@@ -77,5 +77,10 @@ public class OrderJpaRepository implements OrderRepository{
                 .toList();
     }
 
+    @Override
+    public void deleteOrder(OrderId orderId) {
+        this.orderDAO.deleteById(orderId.getValue());
+    }
+
 
 }

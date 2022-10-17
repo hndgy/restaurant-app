@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import fr.hndgy.restaurantapp.application.events.ChoiceAddedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
+import fr.hndgy.restaurantapp.application.events.OrderDeletedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +22,12 @@ public class WebSocketController {
     public void receive(OrderCreatedEvent event){
         log.info("New order created with id : "+ event.getOrder().getOrderId());
         messageTemplate.convertAndSend("/topic/orders", event.getOrder());
+    } 
+    
+    @EventListener
+    public void receive(OrderDeletedEvent event){
+        log.info("Delete order with id : "+ event.getOrderId());
+        messageTemplate.convertAndSend("/topic/ordersDeleted", event.getOrderId());
     }
 
     @EventListener

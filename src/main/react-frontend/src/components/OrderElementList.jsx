@@ -1,15 +1,12 @@
 import React from 'react'
-import { useState } from 'react'
-import OrderService from '../services/OrderService'
 
-function OrderElementList({title,order, mealCategory}) {
+function OrderElementList({title,order, mealCategory, handleDelete}) {
 
 
     const handleAddChoice = () => {
+        
     }
-    const handleDelete =  (choiceId) => {
-        OrderService.removeChoice(order.orderId.value,choiceId);
-    }
+
   return (
     <div className='col-sm-6'>
                     <h2>{title}</h2>
@@ -19,6 +16,7 @@ function OrderElementList({title,order, mealCategory}) {
                             choice => (
                                 <tr key={choice.orderChoiceId.value}>
                                     <th scope="row">
+                                        <button className='btn btn-light btn-sm'>+1</button> 
                                         {choice.menuElement.name}
                                     </th>
                                     <td>
@@ -28,14 +26,14 @@ function OrderElementList({title,order, mealCategory}) {
                                         {choice.creationDateTime}
                                     </td>  
                                     <td>
-                                        <button className='btn btn-danger btn-sm' onClick={handleDelete(choice.orderChoiceId.value)}>
+
+                                    <button className='btn btn-danger btn-sm' onClick={() => handleDelete(choice.orderChoiceId.value)}>
                                             Supprimer
                                         </button>
                                     </td>
                                 </tr>
                             )
                         )}
-                    
                             <tr className='table-light'>
                                 <td colSpan={4} onClick={handleAddChoice}> Ajouter +</td>
                             </tr>

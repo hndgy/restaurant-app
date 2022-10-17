@@ -32,7 +32,7 @@ function NewOrder() {
             res => res.json()
         ).then(
             data => {
-                navigate(`/editChoices/${data.orderId.value}`)
+                navigate(`/editOrder/${data.orderId.value}`)
             }
         );
     }
