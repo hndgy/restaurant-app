@@ -20,11 +20,19 @@ function EditOrder() {
                 });
         },[params]
     );
+
+    useEffect(() => {
+       console.log("ORDER CHANGED", order)
+    },[order])
+
+
     const handleDelete =  (choiceId) => {
         OrderService.removeChoice(order.orderId.value,choiceId)
             .then(() => {
-                order.choices = order.choices.filter(x => x.orderChoiceId.value !== choiceId);
-                setOrder(order)
+                var newOrder = {...order};
+
+                newOrder.choices = order.choices.filter(x => x.orderChoiceId.value !== choiceId);
+                setOrder(newOrder)
             });
         
     }
@@ -37,10 +45,21 @@ function EditOrder() {
 
     const handleOnAdded = (newChoice) => {
         setMealCategorySelected(null);
-        order.choices.push(newChoice)
-        setOrder(order);
 
+        var newOrder = {...order};
+        newOrder.choices.push(newChoice);
+        setOrder(newOrder);
     }
+
+    const handleAddOne = (elementId, mealCategory) => {
+        OrderService.addChoice(order.orderId.value,elementId, "",mealCategory)
+            .then(res => res.json())
+            .then(data => {
+                handleOnAdded(data);
+            });
+    }
+
+    const handles = {handleAddChoice, handleAddOne, handleDelete}
 
   return (
     <div className='container mt-2 text-center'>
@@ -49,8 +68,8 @@ function EditOrder() {
         {(order && (
             <div>
                 <div className='row text-center'>
-                    <h3>Table : {order.table.name}</h3> 
-                    <h4> Couverts : {order.nbOfGuests}</h4> 
+                    <h3>Table : {order.table.name}</h3>
+                    <h4> Couverts : {order.nbOfGuests}</h4>
                     <hr/>
                 </div>
                 <div className='row'>
@@ -58,15 +77,14 @@ function EditOrder() {
                             title={"Entrées"}
                             choicesByElement={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "STARTERS"))}
                             mealCategory={"STARTERS"}
-                            handleDelete={handleDelete}
-                            handleAddChoice={handleAddChoice}
+                            {...handles}
                             />
                     <OrderElementList
                             title={"Plats"}
                             choicesByElement={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "DISHES"))}
                             mealCategory={"DISHES"}
-                            handleDelete={handleDelete}
-                            handleAddChoice={handleAddChoice}
+                            {...handles}
+
                             />
                 </div>
                 <div className='row'>
@@ -74,24 +92,26 @@ function EditOrder() {
                             title={"Apéritifs"}
                             choicesByElement={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "STARTER_DRINKS"))}
                             mealCategory={"STARTER_DRINKS"}
-                            handleDelete={handleDelete}
-                            handleAddChoice={handleAddChoice}
+                            {...handles}
+
                             />
                     <OrderElementList
                             title={"Boissons"}
                             choicesByElement={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "MEAL_DRINKS"))}
                             mealCategory={"MEAL_DRINKS"}
-                            handleDelete={handleDelete}
-                            handleAddChoice={handleAddChoice}
+                            {...handles}
+
                             />
                 </div>
                 <div className='row'>
                     <OrderElementList
                             title={"Desserts"}
-                            choices={null}
+                            choices={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "MEAL_DRINKS"))}
                             mealCategory={"DESSERTS"}
                             handleDelete={handleDelete}
                             handleAddChoice={handleAddChoice}
+                            handleAddOne={handleAddOne}
+
                             />
             </div>
         </div>
