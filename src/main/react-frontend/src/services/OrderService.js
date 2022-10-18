@@ -21,8 +21,21 @@ class OrderService{
         return fetch(`/api/order/${orderId}`);
     }
 
-    addChoice(orderId, elementId){
-
+    addChoice(orderId, elementId, comment, category){
+        return fetch(`/api/order/${orderId}/choice`,
+        {
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    "menuElementId" : elementId,
+                    "comment" : comment,
+                    "mealCategory" : category
+                }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+    );
     }
 
     removeChoice(orderId, choiceId){
@@ -46,6 +59,25 @@ class OrderService{
                 method: 'DELETE'
             }
         );
+    }
+
+
+    getChoicesByMenuElement(choices) {
+        const res = {};
+        choices.forEach(
+            (choice) => {
+                console.log(choice)
+                if(res[choice.menuElement.menuElementId.value]){
+                    res[choice.menuElement.menuElementId.value]["choices"].push(choice);
+                }else{
+                    res[choice.menuElement.menuElementId.value] = choice.menuElement;
+                    res[choice.menuElement.menuElementId.value]["choices"] = [choice];
+                }
+            }
+        );
+
+          console.log(res);
+          return res;
     }
 }
 

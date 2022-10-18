@@ -38,6 +38,8 @@ function Orders() {
 
 
     const handleDelete = (orderId) => {
+        if(!window.confirm("êtes-vous sûr ?")) return;
+
         OrderService.removeOrder(orderId)
             .then(
                 () => {

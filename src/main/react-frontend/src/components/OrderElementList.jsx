@@ -1,41 +1,38 @@
 import React from 'react'
 
-function OrderElementList({title,order, mealCategory, handleDelete}) {
-
-
-    const handleAddChoice = () => {
-        
-    }
+function OrderElementList({title,choicesByElement, mealCategory, handleDelete, handleAddChoice}) {
 
   return (
     <div className='col-sm-6'>
                     <h2>{title}</h2>
                     <table className="table table-hover">
                     <tbody>
-                        {order.choices.filter(c => c.mealCategory === mealCategory).map(
-                            choice => (
-                                <tr key={choice.orderChoiceId.value}>
+                        {choicesByElement && Object.keys(choicesByElement).map(
+                            elId => (
+                                <tr key={elId}>
                                     <th scope="row">
-                                        <button className='btn btn-light btn-sm'>+1</button> 
-                                        {choice.menuElement.name}
+                                        {choicesByElement[elId].name} ({choicesByElement[elId].choices.length})
                                     </th>
                                     <td>
-                                        {choice.comment}
+                                        <ul>
+                                        {choicesByElement[elId].choices.map(c => {
+                                            if(c.comment)
+                                                return (<li>{c.comment}</li>);
+                                            })}
+                                        </ul>
+
                                     </td>
                                     <td>
-                                        {choice.creationDateTime}
-                                    </td>  
-                                    <td>
-
-                                    <button className='btn btn-danger btn-sm' onClick={() => handleDelete(choice.orderChoiceId.value)}>
-                                            Supprimer
-                                        </button>
+                                    <button className='btn btn-light btn-sm'>+1</button>
+                                        {<button className='btn btn-danger btn-sm' onClick={() => handleDelete(choicesByElement[elId].choices[0].orderChoiceId.value)}>
+                                            -1
+                                        </button> }
                                     </td>
                                 </tr>
                             )
                         )}
                             <tr className='table-light'>
-                                <td colSpan={4} onClick={handleAddChoice}> Ajouter +</td>
+                                <td colSpan={4} onClick={() => handleAddChoice(mealCategory)}> Ajouter +</td>
                             </tr>
                     </tbody>
                     </table>
