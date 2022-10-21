@@ -1,8 +1,11 @@
 import React from 'react'
+import Orders from '../components/Orders'
 
 function Kitchen() {
   return (
-    <div>Kitchen</div>
+    <div>
+      <Orders/>
+    </div>
   )
 }
 

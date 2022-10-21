@@ -39,12 +39,15 @@ function NewOrder() {
 
 
   return (
-    <div className='container mt-5'>
-        <form onSubmit={e => handleSubmit(e)}>
+    <div className='container mt-5 text-center'>
+        {((!tables || tables.length === 0) && (
+            <h4> Aucune table n'est disponible pour le moment :( </h4>
+        )) || (
+            <form onSubmit={e => handleSubmit(e)}>
             <div className="form-group mb-3">
                 <label className="form-label mt-4">Table</label>
                 <select className="form-select" name="tableId">
-                    {tables && tables.map(
+                    {tables.map(
                         table => (
                             <option key={table.tableId.value} value={table.tableId.value}>{table.name}</option>
                         )
@@ -70,6 +73,8 @@ function NewOrder() {
           
         </form>
 
+        )}
+    
     </div>
     )
 }

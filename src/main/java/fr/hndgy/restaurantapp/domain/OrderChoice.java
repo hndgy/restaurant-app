@@ -19,6 +19,7 @@ public class OrderChoice {
     private final String comment;
     private final LocalDateTime creationDateTime;
     private final MealCategory mealCategory;
+    // private final boolean delivered;
 
     public static OrderChoice of(MenuElement menuElement, String comment, MealCategory mealCategory){
         return new OrderChoice(OrderChoiceId.generate(), menuElement, comment, LocalDateTime.now(),mealCategory);

@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import ListMenuElement from '../components/ListMenuElement';
 import OrderElementList from '../components/OrderElementList';
-import Popup from '../components/Popup';
 import OrderService from '../services/OrderService';
 
 function EditOrder() {
@@ -63,13 +62,12 @@ function EditOrder() {
 
   return (
     <div className='container mt-2 text-center'>
-        <Popup/>
         
         {(order && (
             <div>
                 <div className='row text-center'>
                     <h3>Table : {order.table.name}</h3>
-                    <h4> Couverts : {order.nbOfGuests}</h4>
+                    <h4>Couverts : {order.nbOfGuests}</h4>
                     <hr/>
                 </div>
                 <div className='row'>
@@ -106,18 +104,16 @@ function EditOrder() {
                 <div className='row'>
                     <OrderElementList
                             title={"Desserts"}
-                            choices={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "MEAL_DRINKS"))}
+                            choices={OrderService.getChoicesByMenuElement(order.choices.filter(x => x.mealCategory === "DESSERTS"))}
                             mealCategory={"DESSERTS"}
-                            handleDelete={handleDelete}
-                            handleAddChoice={handleAddChoice}
-                            handleAddOne={handleAddOne}
+                            {...handles}
 
                             />
             </div>
         </div>
 
         )) || (
-            <div className="spinner-border text-dark" role="status">
+            <div className="spinner-border text-dark mt-5" role="status">
                 <span className="sr-only"></span>
             </div>
         )}

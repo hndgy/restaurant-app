@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import fr.hndgy.restaurantapp.application.events.ChoiceAddedEvent;
+import fr.hndgy.restaurantapp.application.events.ChoiceDeletedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderDeletedEvent;
 import fr.hndgy.restaurantapp.application.port.in.AddChoiceCommand;
@@ -51,6 +52,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void removeChoice(RemoveChoiceCommand choiceCommand){
         this.orderRepository.removeChoice(choiceCommand.getOrderChoiceId());
+        this.applicationEventPublisher.publishEvent(new ChoiceDeletedEvent(this, choiceCommand));
     }
 
     @Override

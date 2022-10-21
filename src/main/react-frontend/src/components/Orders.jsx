@@ -6,6 +6,13 @@ import SockJs from "sockjs-client/dist/sockjs"
 import { Link } from 'react-router-dom';
 import OrderService from '../services/OrderService';
 
+const mealCategoryTitles = {
+    "STARTERS" : "Entrées",
+    "DISHES" : "Plats",
+    "DESSERTS" : "Desserts"
+
+}
+
 function Orders() {
 
     const [isConnected, setConnected] = useState(false);
@@ -18,23 +25,32 @@ function Orders() {
                 console.log(data);
                 setOrders(data);
             });
-    },[]);
-    var socket = new SockJs("http://localhost:8080/ws-orders");
 
-    var ws = Stomp.over(socket);
-    ws.connect({}, function(frame) {
-        setConnected(true);
-        ws.subscribe("/topic/orders", function (msg) {
-            if (msg.body) {
-                var newOrder = JSON.parse(msg.body);
-                var newList = orders.concat(newOrder);
-                console.log(newList);
-                setOrders(newList);
-            }
-        });
-    }, function(error) {
-        alert("STOMP error " + error);
-    });
+            var socket = new SockJs("http://localhost:8080/ws-orders");
+
+            var ws = Stomp.over(socket);
+            ws.connect({}, function(frame) {
+                setConnected(true);
+                ws.subscribe("/topic/orders", function (msg) {
+                    if (msg.body) {
+                        var newOrder = JSON.parse(msg.body);
+                        var newList = orders.concat(newOrder);
+                        console.log(newList);
+                        setOrders(newList);
+                    }
+                }); 
+                
+                ws.subscribe("/topic/choicesDeleted", function (msg) {
+                    if (msg.body) {
+                        var choiceDeleted = JSON.parse(msg.body);
+                        //Do something
+                    }
+                });
+            }, function(error) {
+                alert("STOMP error " + error);
+            });
+    },[]);
+    
 
 
     const handleDelete = (orderId) => {
@@ -65,21 +81,44 @@ function Orders() {
             orders.map(order => {
                 return (
                     <div className="card border-dark mb-3 col-sm-4 " key={order.orderId.value}>
-                    <div className="card-header">{order.table.name} ({order.creationDateTime}) 
-                        <Link className='btn btn-warning mr-2' to={`/editOrder/${order.orderId.value}`}> Modifier </Link>
+                    <div className="card-header">
+                        <h6>{order.nbOfGuests} personne(s)</h6>
+                        {order.table.name} ({new Date(order.creationDateTime).toLocaleTimeString()})
+                        <Link className='btn btn-warning mr-2' to={`/editOrder/${order.orderId.value}`}> Modifier </Link> <br/>
                         <button className='btn btn-secondary' onClick={() => {handleDelete(order.orderId.value)}}>Annuler</button>
                     </div>
                     <div className="card-body">
-                        <h6>{order.nbOfGuests} personne(s)</h6>
 
-                        {order.choices.map(choice => {
-                            return (
-                                <div key={choice.orderChoiceId.value}>
-                                    <h4 className="card-title">{choice.menuElement.name}</h4>
-                                    <p className="text-danger">Commentaires : {choice.comment}</p>
-                                </div>
-                            );
-                        })}
+                        {OrderService.getKitchenMealCategories().map(
+                            mealCategory => {
+                                const mealCategoryElements = order.choices.filter(x => x.mealCategory === mealCategory);
+
+                                if(mealCategoryElements.length === 0) return null;
+
+                                const choicesByElement = OrderService.getChoicesByMenuElement(mealCategoryElements)
+
+                                return (
+                                    <>
+                                        <u><h4>{mealCategoryTitles[mealCategory]}</h4></u>
+                                        {Object.keys(choicesByElement).map(
+                                        elId => (
+                                            <p>
+                                                <b>{choicesByElement[elId].choices.length} </b>
+                                                {choicesByElement[elId].name}
+                                                <ul>
+                                                    {choicesByElement[elId].choices.map( choice => {
+                                                        if(choice.comment) return (<li>{choice.comment}</li>)
+                                                        else return null;
+                                                    }
+                                                    )}
+                                                </ul>
+                                                
+                                            </p>
+                                        ))}
+                                    </>
+                                )
+                            }
+                        )}
                     </div>
                 </div>
                 );

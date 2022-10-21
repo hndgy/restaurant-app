@@ -4,7 +4,10 @@ function OrderElementList({title,choicesByElement, mealCategory, handleDelete, h
 
   return (
     <div className='col-sm-6'>
-                    <h2>{title}</h2>
+                    <h2>
+                        {title} <input type="checkbox"/>
+                    </h2>
+
                     <table className="table table-hover">
                     <tbody>
                         {choicesByElement && Object.keys(choicesByElement).map(
@@ -18,6 +21,8 @@ function OrderElementList({title,choicesByElement, mealCategory, handleDelete, h
                                         {choicesByElement[elId].choices.map(c => {
                                             if(c.comment)
                                                 return (<li key={c.orderChoiceId.value}>{c.comment}</li>);
+                                            else
+                                                return null;
                                             })}
                                         </ul>
 
@@ -34,7 +39,7 @@ function OrderElementList({title,choicesByElement, mealCategory, handleDelete, h
                             )
                         )}
                             <tr className='table-light'>
-                                <td colSpan={4} onClick={() => handleAddChoice(mealCategory)}> Ajouter +</td>
+                                <td style={{cursor: "pointer"}} colSpan={4} onClick={() => handleAddChoice(mealCategory)}> Ajouter +</td>
                             </tr>
                     </tbody>
                     </table>

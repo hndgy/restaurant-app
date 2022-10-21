@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import fr.hndgy.restaurantapp.application.events.ChoiceAddedEvent;
+import fr.hndgy.restaurantapp.application.events.ChoiceDeletedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderCreatedEvent;
 import fr.hndgy.restaurantapp.application.events.OrderDeletedEvent;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,11 @@ public class WebSocketController {
     public void receive(ChoiceAddedEvent event){
         log.info("New choice added with id : "+ event.getOrderChoice().getOrderChoiceId());
         messageTemplate.convertAndSend("/topic/choices", event.getOrderChoice());
+    } 
+    
+    @EventListener
+    public void receive(ChoiceDeletedEvent event){
+        log.info("New choice removed with id : "+ event.getRemoveChoice().getOrderChoiceId().getValue());
+        messageTemplate.convertAndSend("/topic/choicesDeleted", event.getRemoveChoice());
     }
 }

@@ -79,6 +79,13 @@ class OrderService{
           console.log(res);
           return res;
     }
+
+    mealCategories = ["STARTERS", "DISHES",  "DESSERTS","STARTER_DRINKS","MEAL_DRINKS"]
+    kitchenMealCategories = ["STARTERS", "DISHES",  "DESSERTS"]
+
+    getKitchenMealCategories(){
+        return this.kitchenMealCategories;
+    }
 }
 
 export default new OrderService();
