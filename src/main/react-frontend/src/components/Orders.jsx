@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { Stomp } from '@stomp/stompjs';
 import SockJs from "sockjs-client/dist/sockjs"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OrderService from '../services/OrderService';
 
 const mealCategoryTitles = {
@@ -15,6 +15,7 @@ const mealCategoryTitles = {
 
 function Orders() {
 
+    const navigate = useNavigate();
     const [isConnected, setConnected] = useState(false);
     const [orders, setOrders] = useState([]);
 
@@ -43,7 +44,7 @@ function Orders() {
                 ws.subscribe("/topic/choicesDeleted", function (msg) {
                     if (msg.body) {
                         var choiceDeleted = JSON.parse(msg.body);
-                        //Do something
+                        navigate("/kitchen")
                     }
                 });
             }, function(error) {
@@ -105,13 +106,11 @@ function Orders() {
                                             <p>
                                                 <b>{choicesByElement[elId].choices.length} </b>
                                                 {choicesByElement[elId].name}
-                                                <ul>
                                                     {choicesByElement[elId].choices.map( choice => {
-                                                        if(choice.comment) return (<li>{choice.comment}</li>)
+                                                        if(choice.comment) return (<span>{choice.comment}</span>)
                                                         else return null;
                                                     }
                                                     )}
-                                                </ul>
                                                 
                                             </p>
                                         ))}
