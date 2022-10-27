@@ -6,4 +6,6 @@ import fr.hndgy.restaurantapp.domain.MenuElement;
 
 public interface MenuElementService {
     List<MenuElement> getAllMenuElement();
+
+    MenuElement create(CreateMenuElementCommand command);
 }

@@ -21,6 +21,9 @@ public class MenuElement {
     public static MenuElement of(MenuElementId id, String name, Double price, MenuElementType type){
         return new MenuElement(id, name, price,type);
     }
+    public static MenuElement of( String name, Double price, MenuElementType type){
+        return new MenuElement(MenuElementId.generate(), name, price,type);
+    }
 
     public static enum MenuElementType{
         FOOD, DRINK

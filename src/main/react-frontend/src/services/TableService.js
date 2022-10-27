@@ -14,7 +14,10 @@ class TableService{
         return fetch('/api/table',
         {
             method: 'POST',
-            body: JSON.stringify({name : name})
+            body: JSON.stringify({name : name}),
+            headers : {
+                'Content-Type': 'application/json'
+            }
         });
     }
 }

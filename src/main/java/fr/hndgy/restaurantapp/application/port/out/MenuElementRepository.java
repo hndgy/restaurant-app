@@ -9,7 +9,7 @@ public interface MenuElementRepository {
 
     MenuElement getById(MenuElementId idElement);
 
-    MenuElement create(MenuElement foodWithoutId);
+    MenuElement create(MenuElement menuElement);
 
     List<MenuElement> getAll();
     
